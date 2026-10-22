@@ -7,5 +7,5 @@ pub(crate) struct HealthBody {
 }
 
 pub(crate) async fn health() -> Json<HealthBody> {
-    Json(HealthBody { status: "OK" })
+    Json(HealthBody { status: "ok" })
 }
