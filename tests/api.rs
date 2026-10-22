@@ -48,8 +48,21 @@ async fn health_returns_ok() {
 }
 
 #[tokio::test]
+async fn version_returns_crate_version() {
+    let (status, body) = send(rust_api_example::app(), "GET", "/version").await;
+
+    assert_eq!(status, StatusCode::OK);
+    assert_eq!(body, json!({ "version": env!("CARGO_PKG_VERSION") }));
+}
+
+#[tokio::test]
 async fn unknown_routes_return_json_404() {
-    for (method, path) in [("GET", "/does-not-exist"), ("POST", "/health")] {
+    for (method, path) in [
+        ("GET", "/does-not-exist"),
+        ("POST", "/health"),
+        ("POST", "/version"),
+        ("DELETE", "/version"),
+    ] {
         let (status, body) = send(rust_api_example::app(), method, path).await;
 
         assert_eq!(status, StatusCode::NOT_FOUND, "{method} {path}");
