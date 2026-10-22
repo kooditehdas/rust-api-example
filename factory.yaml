@@ -1,0 +1,33 @@
+# Kooditehdas factory settings for this repository.
+# Anything left out falls back to the profile defaults in kooditehdas/factory/profiles/<profile>.yaml.
+profile: rust
+
+model:
+  implement: claude-opus-5-5
+  review: claude-sonnet-5-5
+
+# Cost cap for a single agent run, in USD.
+max_budget_usd: 6
+
+# CI auto-fix attempts per PR before the PR is marked ai-blocked.
+max_fix_attempts: 3
+
+# Total agent runs (implement, fix, respond, review) per issue or PR before it is marked ai-blocked.
+max_agent_runs_per_pr: 10
+
+# The implementer stops and asks for a plan approval instead of coding when a change is larger than this.
+# small | medium | large
+plan_threshold: large
+
+# Changes touching these paths open a draft PR and need explicit human attention.
+protected_paths:
+  - ".github/**"
+  - "factory.yaml"
+  - ".factory/**"
+  - "rust-toolchain.toml"
+  - "Cargo.lock"
+
+review:
+  enabled: true
+  # Also run the automatic AI review on PRs written by people.
+  human_prs: false
