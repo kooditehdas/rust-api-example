@@ -48,11 +48,17 @@ async fn health_returns_ok() {
 }
 
 #[tokio::test]
-async fn version_returns_crate_version() {
+async fn version_returns_crate_name_and_version() {
     let (status, body) = send(rust_api_example::app(), "GET", "/version").await;
 
     assert_eq!(status, StatusCode::OK);
-    assert_eq!(body, json!({ "version": env!("CARGO_PKG_VERSION") }));
+    assert_eq!(
+        body,
+        json!({
+            "name": env!("CARGO_PKG_NAME"),
+            "version": env!("CARGO_PKG_VERSION"),
+        })
+    );
 }
 
 #[tokio::test]
