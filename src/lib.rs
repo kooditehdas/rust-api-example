@@ -3,6 +3,7 @@
 
 mod error;
 mod health;
+mod version;
 
 use axum::Router;
 use axum::routing::get;
@@ -12,7 +13,11 @@ pub use error::ApiError;
 
 /// Builds the API router with every route registered.
 pub fn app() -> Router {
-    with_error_handling(Router::new().route("/health", get(health::health)))
+    with_error_handling(
+        Router::new()
+            .route("/health", get(health::health))
+            .route("/version", get(version::version)),
+    )
 }
 
 /// Adds the JSON error behavior to `router`: unknown paths and unsupported methods return the
